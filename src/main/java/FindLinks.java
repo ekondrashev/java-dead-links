@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class FindLinks {
@@ -38,6 +39,7 @@ public class FindLinks {
 
 
         List<WebElement> links = driver.findElements(By.xpath("//*[@href]"));
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 
         List<String> allLinks = links
@@ -45,12 +47,6 @@ public class FindLinks {
                 .map(ele -> ele.getAttribute("href"))
                 .distinct()
                 .collect(Collectors.toList());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
 
         driver.quit();
         return allLinks;

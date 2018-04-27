@@ -18,3 +18,9 @@ public final class HttpClient {
         documentWithDeadLinks.outputDeadLinks();
     }
 }
+
+// static method make some working test
+// interface + instructions
+//class Link() - remove just leave class URL from java.net
+//make simpler
+//Links -> iterable implementation that returns links from html foreach

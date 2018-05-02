@@ -1,4 +1,4 @@
-package com.deadlinks.links;
+package com.deadlinks;
 
 import java.net.URL;
 import java.util.Iterator;

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 
-public class Main2 {
+public class Main {
     public static void main(String[] args) {
         String url = new String(args[0]);
         DeadLinks urlLinks = new DeadLinks(url);

@@ -61,7 +61,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.deadlinks.Main2</mainClass>
+                            <mainClass>com.deadlinks.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -90,7 +90,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.deadlinks.Main2</mainClass>
+                            <mainClass>com.deadlinks.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

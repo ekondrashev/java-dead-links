@@ -24,6 +24,11 @@ dependencies {
     compile 'com.google.guava:guava:22.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.41.0'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.7.2'
+    compile group: 'org.json', name: 'json', version: '20090211'
+    compile group: 'com.fasterxml', name: 'jackson-xml-databind', version: '0.6.2'
+
+
+
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'

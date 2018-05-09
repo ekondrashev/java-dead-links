@@ -1,3 +1,4 @@
+import org.json.JSONObject;
 import org.junit.Test;
 
 import java.util.List;
@@ -16,12 +17,13 @@ public class SeleniumBadLinksTest {
     }
 
     @Test
-    public void JsoupBadLinksTest() throws Exception {
+    public void jsoupBadLinksTest() throws Exception {
         DeadLinks deadLinks = new JsoupBadLinks();
         List<String> links = deadLinks.badLinks("https://android.stackexchange.com/questions/4538/can-i-emulate-a-bluetooth-keyboard-with-my-android-device");
         int result = 10;
         assertEquals(result, links.size());
     }
+
 
 
 }

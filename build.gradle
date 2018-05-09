@@ -32,6 +32,8 @@ dependencies {
 
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
+    testCompile group: 'org.skyscreamer', name: 'jsonassert', version: '1.2.3'
+
 }
 
 // Define the main class for the application

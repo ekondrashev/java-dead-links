@@ -1,3 +1,4 @@
+
 import org.junit.Test;
 
 import java.util.List;
@@ -17,24 +18,27 @@ public class DeadLinksTests {
     @Test
     public void outputJsonTest() throws Exception {
         JsoupBadLinks deadLinks = new JsoupBadLinks();
+        boolean comparison;
         List<String> links = deadLinks.badLinks("https://android.stackexchange.com/questions/4538/can-i-emulate-a-bluetooth-keyboard-with-my-android-device");
         String ex = "{\n" +
-                "  \"total:\" : ,\n" +
-                "  \"dead:\" : ,\n" +
+                "  \"Your url:\" : \"https://android.stackexchange.com/questions/4538/can-i-emulate-a-bluetooth-keyboard-with-my-android-device\",\n" +
+                "  \"Output\" : {\n" +
+                "    \"total:\" : 258,\n" +
+                "    \"dead:\" : 10\n" +
+                "  },\n" +
                 "  \"404\" : {\n" +
-                "    \"urls:\" : [ [ \"\" ] ],\n" +
-                "    \"size:\" : \n" +
+                "    \"urls:\" : [ [ \"https://stackexchange.com/users/?tab=inbox\", \"https://stackexchange.com/users/?tab=reputation\", \"https://android.stackexchange.com/posts/4538/edit\", \"https://android.stackexchange.com/posts/6483/edit\", \"https://market.android.com/details?id=org.pierre.remotedroid.client&feature=search_result\", \"https://android.stackexchange.com/posts/6484/edit\", \"https://android.stackexchange.com/posts/35842/edit\", \"https://android.stackexchange.com/posts/6518/edit\", \"https://android.stackexchange.com/posts/67698/edit\", \"https://android.stackexchange.com/questions/4538/can-i-emulate-a-bluetooth-keyboard-with-my-android-device?lastactivity\" ] ],\n" +
+                "    \"size:\" : 10\n" +
                 "  },\n" +
-                "  \"505\" : {\n" +
+                "  \"50x\" : {\n" +
                 "    \"urls:\" : [ [ ] ],\n" +
-                "    \"size:\" : \n" +
-                "  },\n" +
-                "  \"url:\" : \"\"\n" +
+                "    \"size:\" : 0\n" +
+                "  }\n" +
                 "}";
 
-        String jsonExample = links.toString();
+         comparison = ex.equals(links);
 
-        ex.equals(jsonExample);
+        System.out.println(comparison);
 
     }
 }

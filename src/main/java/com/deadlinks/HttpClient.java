@@ -5,40 +5,55 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HttpClient {
 
-    private Map<Integer, String> result;
+    private Map<Integer, List<String>> result;
+    private List<String> successUrls;
+    private List<String> failedUrls;
+    private List<String> incorrectUrls;
+
+    public HttpClient() {
+        result = new HashMap<>();
+        successUrls = new ArrayList<>();
+        failedUrls = new ArrayList<>();
+        incorrectUrls = new ArrayList<>();
+    }
 
     public void checkUrls(String... urls) {
         List<String> links = getLinksFromHtml(urls);
-        links.forEach(url -> {
+        links.stream().forEach(url -> {
             if (verifyUrl(url)) {
+                HttpURLConnection connection = null;
                 try {
                     URL currentUrl = new URL(url);
-                    HttpsURLConnection connection = (HttpsURLConnection) currentUrl.openConnection();
+                    connection = (HttpURLConnection) currentUrl.openConnection();
                     if (connection.getResponseCode() == UrlStatus.HTTP_OK.getStatusCode()) {
-                        result.put(connection.getResponseCode(), url);
+                        successUrls.add(url);
+                        result.putIfAbsent(connection.getResponseCode(), successUrls);
                     } else {
-                        result.put(connection.getResponseCode(), url);
+                        failedUrls.add(url);
+                        result.putIfAbsent(connection.getResponseCode(), failedUrls);
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
                 }
             } else {
-                result.put(0, url);
+                incorrectUrls.add(url);
+                result.putIfAbsent(0, incorrectUrls);
             }
         });
     }
@@ -66,7 +81,7 @@ public class HttpClient {
         return matcher.matches();
     }
 
-    public Map<Integer, String> getResult() {
+    public Map<Integer, List<String>> getResult() {
         return result;
     }
 }

@@ -1,5 +1,6 @@
-package com.deadlinks;
+package com.deadlinks.service;
 
+import com.deadlinks.UrlStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,19 +16,18 @@ import java.util.regex.Pattern;
 
 public class HttpClient {
 
-    private Map<Integer, List<String>> result;
-    private List<String> successUrls;
-    private List<String> failedUrls;
-    private List<String> incorrectUrls;
+    private String[] urls;
 
-    public HttpClient() {
-        result = new HashMap<>();
-        successUrls = new ArrayList<>();
-        failedUrls = new ArrayList<>();
-        incorrectUrls = new ArrayList<>();
+    public HttpClient(String[] urls) {
+        this.urls = urls;
     }
 
-    public void checkUrls(String... urls) {
+    public Map<Integer, List<String>> checkUrls() {
+        Map<Integer, List<String>> result = new HashMap<>();
+        List<String> successUrls = new ArrayList<>();
+        List<String> failedUrls = new ArrayList<>();
+        List<String> incorrectUrls = new ArrayList<>();
+
         List<String> links = getLinksFromHtml(urls);
         links.stream().forEach(url -> {
             if (verifyUrl(url)) {
@@ -56,6 +56,7 @@ public class HttpClient {
                 result.putIfAbsent(0, incorrectUrls);
             }
         });
+        return result;
     }
 
     private List<String> getLinksFromHtml(String... urls) {
@@ -81,7 +82,4 @@ public class HttpClient {
         return matcher.matches();
     }
 
-    public Map<Integer, List<String>> getResult() {
-        return result;
-    }
 }

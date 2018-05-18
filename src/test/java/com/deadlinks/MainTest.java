@@ -1,5 +1,6 @@
 package com.deadlinks;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class MainTest {
     }
 
     @Test
-    public void dead_links_test() {
+    public void dead_links_test() throws JsonProcessingException {
         String[] url ={"https://junit.org/junit5/"};
         Main.main(url);
         assertEquals(getExpectedValue(), outputContent.toString());

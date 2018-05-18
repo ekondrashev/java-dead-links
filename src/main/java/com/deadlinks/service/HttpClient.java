@@ -82,4 +82,7 @@ public class HttpClient {
         return matcher.matches();
     }
 
+    public String[] getUrls() {
+        return urls;
+    }
 }

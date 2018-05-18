@@ -32,7 +32,16 @@ public class MainTest {
     }
 
     private String getExpectedValue() {
-        return "{0=[/junit5/, /junit5/docs/current/user-guide, /junit5/docs/current/api, /junit5/docs/current/user-guide, /junit5/docs/current/api], 200=[https://github.com/junit-team/junit5/, https://github.com/junit-team/junit5/, https://github.com/junit-team/junit5/wiki/Adding-your-talk-to-the-JUnit-website], 301=[http://junit.org/junit4/, http://stackoverflow.com/questions/tagged/junit5, http://junit.org/junit4/junit-lambda.html, http://junit.org/junit4/junit-lambda-campaign.html]}"
-                + System.lineSeparator();
+        return "{" + System.lineSeparator() +
+                "  \"url\" : \"https://junit.org/junit5/\"," + System.lineSeparator() +
+                "  \"urlDetails\" : {" + System.lineSeparator() +
+                "    \"0\" : {" + System.lineSeparator() +
+                "      \"size\" : 5," + System.lineSeparator() +
+                "      \"urls\" : [ \"/junit5/\", \"/junit5/docs/current/user-guide\", \"/junit5/docs/current/api\", \"/junit5/docs/current/user-guide\", \"/junit5/docs/current/api\" ]" + System.lineSeparator() +
+                "    }" + System.lineSeparator() +
+                "  }," + System.lineSeparator() +
+                "  \"deadLinks\" : 5," + System.lineSeparator() +
+                "  \"totalLinks\" : 12" + System.lineSeparator() +
+                "}" + System.lineSeparator();
     }
 }

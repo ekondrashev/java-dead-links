@@ -1,13 +1,14 @@
 package com.deadlinks.model;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class DeadLinksReport implements Serializable {
 
     private static final long serialVersionUID = 1234L;
 
     private String url;
-    private UrlDetails urlDetails;
+    private Map<Integer, UrlDetails> urlDetails;
     private int deadLinks;
     private int totalLinks;
 
@@ -19,11 +20,11 @@ public class DeadLinksReport implements Serializable {
         this.url = url;
     }
 
-    public UrlDetails getUrlDetails() {
+    public Map<Integer, UrlDetails> getUrlDetails() {
         return urlDetails;
     }
 
-    public void setUrlDetails(UrlDetails urlDetails) {
+    public void setUrlDetails(Map<Integer, UrlDetails> urlDetails) {
         this.urlDetails = urlDetails;
     }
 

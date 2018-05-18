@@ -3,8 +3,10 @@ package com.deadlinks.service;
 import com.deadlinks.model.DeadLinksReport;
 import com.deadlinks.model.UrlDetails;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DeadLinksService {
 
@@ -21,7 +23,7 @@ public class DeadLinksService {
         int deadLinks = countDeadLinks();
 
         DeadLinksReport deadLinksReport = new DeadLinksReport();
-        deadLinksReport.setUrl("");//TODO get url
+        deadLinksReport.setUrl(getUrl());
         deadLinksReport.setUrlDetails(getUrlDetails());
         deadLinksReport.setDeadLinks(deadLinks);
         deadLinksReport.setTotalLinks(totalLinks);
@@ -33,13 +35,27 @@ public class DeadLinksService {
     }
 
     private int countDeadLinks() {
-        //TODO dead links
-        return 0;
+        AtomicInteger deadLinks = new AtomicInteger();
+        result.forEach((statusCode, listOfLinks) -> {
+            if (statusCode >= 400 || statusCode == 0) {
+                deadLinks.addAndGet(listOfLinks.size());
+            }
+        });
+        return deadLinks.intValue();
     }
 
-    private UrlDetails getUrlDetails(){
-        //TODO UrlDetails
-        return null;
+    private Map<Integer, UrlDetails> getUrlDetails(){
+        Map<Integer, UrlDetails> urlDetails = new HashMap<>();
+        result.forEach((statusCode, listOfLinks) -> {
+            if (statusCode >= 400 || statusCode == 0) {
+                urlDetails.putIfAbsent(statusCode, new UrlDetails(listOfLinks.size(), listOfLinks));
+            }
+        });
+        return urlDetails;
+    }
+
+    private String getUrl() {
+       return httpClient.getUrls()[0];
     }
 
 }

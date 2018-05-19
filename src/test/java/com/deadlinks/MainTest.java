@@ -6,7 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -32,16 +38,15 @@ public class MainTest {
     }
 
     private String getExpectedValue() {
-        return "{" + System.lineSeparator() +
-                "  \"url\" : \"https://junit.org/junit5/\"," + System.lineSeparator() +
-                "  \"urlDetails\" : {" + System.lineSeparator() +
-                "    \"0\" : {" + System.lineSeparator() +
-                "      \"size\" : 5," + System.lineSeparator() +
-                "      \"urls\" : [ \"/junit5/\", \"/junit5/docs/current/user-guide\", \"/junit5/docs/current/api\", \"/junit5/docs/current/user-guide\", \"/junit5/docs/current/api\" ]" + System.lineSeparator() +
-                "    }" + System.lineSeparator() +
-                "  }," + System.lineSeparator() +
-                "  \"deadLinks\" : 5," + System.lineSeparator() +
-                "  \"totalLinks\" : 12" + System.lineSeparator() +
-                "}" + System.lineSeparator();
+        String expectedJson = "";
+        try {
+            expectedJson = Files.lines(
+                    Paths.get(Objects.requireNonNull(
+                            MainTest.class.getClassLoader().getResource("expected_json")).toURI()))
+                    .collect(Collectors.joining(System.lineSeparator()));
+        } catch (IOException | URISyntaxException | NullPointerException e) {
+            e.printStackTrace();
+        }
+        return expectedJson + System.lineSeparator();
     }
 }

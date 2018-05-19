@@ -1,0 +1,11 @@
+{
+  "url" : "https://junit.org/junit5/",
+  "urlDetails" : {
+    "0" : {
+      "size" : 5,
+      "urls" : [ "/junit5/", "/junit5/docs/current/user-guide", "/junit5/docs/current/api", "/junit5/docs/current/user-guide", "/junit5/docs/current/api" ]
+    }
+  },
+  "dead" : 5,
+  "total" : 12
+}

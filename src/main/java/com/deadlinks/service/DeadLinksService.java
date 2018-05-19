@@ -25,8 +25,8 @@ public class DeadLinksService {
         DeadLinksReport deadLinksReport = new DeadLinksReport();
         deadLinksReport.setUrl(getUrl());
         deadLinksReport.setUrlDetails(getUrlDetails());
-        deadLinksReport.setDeadLinks(deadLinks);
-        deadLinksReport.setTotalLinks(totalLinks);
+        deadLinksReport.setDead(deadLinks);
+        deadLinksReport.setTotal(totalLinks);
         return deadLinksReport;
     }
 

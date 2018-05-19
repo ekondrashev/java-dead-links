@@ -9,8 +9,8 @@ public class DeadLinksReport implements Serializable {
 
     private String url;
     private Map<Integer, UrlDetails> urlDetails;
-    private int deadLinks;
-    private int totalLinks;
+    private int dead;
+    private int total;
 
     public String getUrl() {
         return url;
@@ -28,19 +28,19 @@ public class DeadLinksReport implements Serializable {
         this.urlDetails = urlDetails;
     }
 
-    public int getDeadLinks() {
-        return deadLinks;
+    public int getDead() {
+        return dead;
     }
 
-    public void setDeadLinks(int deadLinks) {
-        this.deadLinks = deadLinks;
+    public void setDead(int dead) {
+        this.dead = dead;
     }
 
-    public int getTotalLinks() {
-        return totalLinks;
+    public int getTotal() {
+        return total;
     }
 
-    public void setTotalLinks(int totalLinks) {
-        this.totalLinks = totalLinks;
+    public void setTotal(int total) {
+        this.total = total;
     }
 }

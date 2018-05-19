@@ -31,6 +31,18 @@ public class DeadLinksTest {
     assertEquals(expectedResult.trim(), outContent.toString().trim());
   }
 
+  @Test
+  public void err() {
+    DeadLinks deadLinks = new DeadLinks("adasd");
+    try {
+      deadLinks.findDeadLinks();
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
+    }
+    String expectedError = "Illegal URL";
+    assertEquals(expectedError.trim(), errContent.toString().trim());
+  }
+
   @After
   public void restoreStreams() {
     System.setOut(System.out);

@@ -21,34 +21,31 @@ public class DeadLinks implements Serializable {
 
 
   public void findDeadLinks() throws IOException {
-    String protocol = urlForCheck.split("://")[0];
-    Document document = Jsoup.connect(urlForCheck).get();
-    Elements links = document.select("a[href]");
+    try {
+      String protocol = urlForCheck.split("://")[0];
+      Document document = Jsoup.connect(urlForCheck).get();
+      Elements links = document.select("a[href]");
 
-    for (Element link : links) {
-      //or try HttpClient
-      String href = link.attr("href");
-      if (!(href.contains("tel:")) && !(href.contains("javascript:"))) {
-        if (href.matches("^//.*?")) {
-          href = protocol + ":" + href;
-        } else if (!href.matches("^http.*?")) {
-          if (!href.matches("^/.*?")) {
-            href = urlForCheck + "/" + href;
-          } else {
-            href = urlForCheck + href;
+      for (Element link : links) {
+        //or try HttpClient
+        String href = link.attr("href");
+        if (!(href.contains("tel:")) && !(href.contains("javascript:"))) {
+          if (href.matches("^//.*?")) {
+            href = protocol + ":" + href;
+          } else if (!href.matches("^http.*?")) {
+            if (!href.matches("^/.*?")) {
+              href = urlForCheck + "/" + href;
+            } else {
+              href = urlForCheck + href;
+            }
           }
-        }
-        URL url = new URL(href);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        try {
+          URL url = new URL(href);
+          HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
           connection.setRequestMethod("GET");
           connection.connect();
-        } catch (IOException e) {
-          System.err.println(url + " : " + e.getMessage());
-        }
 
-        int code = -1;
-        try {
+          int code = -1;
           code = connection.getResponseCode();
           if (code == 404) {
             this.err404.urls.add(href);
@@ -62,10 +59,10 @@ public class DeadLinks implements Serializable {
           } else {
             this.total++;
           }
-        } catch (IOException e) {
-          System.err.println(e.getMessage());
         }
       }
+    } catch (IllegalArgumentException iae) {
+      System.err.print("Illegal URL");
     }
   }
 

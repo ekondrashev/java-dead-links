@@ -5,6 +5,11 @@ import org.junit.runners.*;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Java code implementing the below contract;
+ Test calling main(String[] args) and verifying the program system output correctness.
+ */
+
 @RunWith(JUnit4.class)
 public class DeadLinksTest {
 
@@ -19,27 +24,15 @@ public class DeadLinksTest {
 
   @Test
   public void out() {
-    String urlForChecking = "http://roofing.tilda.ws";
     String expectedResult = "{\"urlForCheck\":\"http://roofing.tilda.ws\",\"err404\":{\"size\":1,\"urls\":[\"http://roofing.tilda.ws/somepage.html\"]},\"err50x\":{\"size\":0,\"urls\":[]},\"dead\":1,\"total\":14}";
-    DeadLinks deadLinks = new DeadLinks(urlForChecking);
-    try {
-      deadLinks.findDeadLinks();
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
-    }
-    System.out.print(deadLinks);
+    FindDeadLinksApp.main(new String[]{"http://roofing.tilda.ws"});
     assertEquals(expectedResult.trim(), outContent.toString().trim());
   }
 
   @Test
   public void err() {
-    DeadLinks deadLinks = new DeadLinks("adasd");
-    try {
-      deadLinks.findDeadLinks();
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
-    }
     String expectedError = "Illegal URL";
+    FindDeadLinksApp.main(new String[]{"asdasd"});
     assertEquals(expectedError.trim(), errContent.toString().trim());
   }
 

@@ -20,8 +20,7 @@ public class DeadLinks implements Serializable {
   }
 
 
-  public void findDeadLinks() throws IOException {
-    try {
+  public void findDeadLinks() throws IOException, IllegalArgumentException {
       String protocol = urlForCheck.split("://")[0];
       Document document = Jsoup.connect(urlForCheck).get();
       Elements links = document.select("a[href]");
@@ -61,9 +60,6 @@ public class DeadLinks implements Serializable {
           }
         }
       }
-    } catch (IllegalArgumentException iae) {
-      System.err.print("Illegal URL");
-    }
   }
 
   @Override

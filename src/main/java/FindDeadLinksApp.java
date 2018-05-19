@@ -3,16 +3,11 @@ import java.io.*;
 public class FindDeadLinksApp {
 
   public static void main(String[] args) {
-    //    DeadLinks deadLinks = new DeadLinks("https://jsoup.org"); http://roofing.tilda.ws
-
-    DeadLinks deadLinks = null;
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("Please, input your url ");
+    DeadLinks deadLinks = new DeadLinks(args[0]);
     try {
-      String input = reader.readLine();
-      System.out.println("---");
-      deadLinks = new DeadLinks(input);
       deadLinks.findDeadLinks();
+    } catch (IllegalArgumentException iae) {
+      System.err.print("Illegal URL");
     } catch (IOException e) {
       System.err.println(e.getMessage());
     }

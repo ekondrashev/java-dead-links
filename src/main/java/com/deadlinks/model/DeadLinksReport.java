@@ -1,14 +1,18 @@
 package com.deadlinks.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
-import java.util.Map;
 
 public class DeadLinksReport implements Serializable {
 
     private static final long serialVersionUID = 1234L;
 
     private String url;
-    private Map<Integer, UrlDetails> urlDetails;
+    @JsonProperty(value = "400")
+    private UrlDetails urlDetails400;
+    @JsonProperty(value = "50x")
+    private UrlDetails urlDetails50x;
     private int dead;
     private int total;
 
@@ -20,12 +24,20 @@ public class DeadLinksReport implements Serializable {
         this.url = url;
     }
 
-    public Map<Integer, UrlDetails> getUrlDetails() {
-        return urlDetails;
+    public UrlDetails getUrlDetails400() {
+        return urlDetails400;
     }
 
-    public void setUrlDetails(Map<Integer, UrlDetails> urlDetails) {
-        this.urlDetails = urlDetails;
+    public void setUrlDetails400(UrlDetails urlDetails400) {
+        this.urlDetails400 = urlDetails400;
+    }
+
+    public UrlDetails getUrlDetails50x() {
+        return urlDetails50x;
+    }
+
+    public void setUrlDetails50x(UrlDetails urlDetails50x) {
+        this.urlDetails50x = urlDetails50x;
     }
 
     public int getDead() {

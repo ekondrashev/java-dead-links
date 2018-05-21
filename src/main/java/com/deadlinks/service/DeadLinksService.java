@@ -3,7 +3,6 @@ package com.deadlinks.service;
 import com.deadlinks.model.DeadLinksReport;
 import com.deadlinks.model.UrlDetails;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -24,7 +23,8 @@ public class DeadLinksService {
 
         DeadLinksReport deadLinksReport = new DeadLinksReport();
         deadLinksReport.setUrl(getUrl());
-        deadLinksReport.setUrlDetails(getUrlDetails());
+        deadLinksReport.setUrlDetails400(getUrlDetails404());
+        deadLinksReport.setUrlDetails50x(getUrlDetails50x());
         deadLinksReport.setDead(deadLinks);
         deadLinksReport.setTotal(totalLinks);
         return deadLinksReport;
@@ -44,14 +44,24 @@ public class DeadLinksService {
         return deadLinks.intValue();
     }
 
-    private Map<Integer, UrlDetails> getUrlDetails(){
-        Map<Integer, UrlDetails> urlDetails = new HashMap<>();
+    private UrlDetails getUrlDetails404(){
+        final UrlDetails[] urlDetails = {null};
         result.forEach((statusCode, listOfLinks) -> {
-            if (statusCode >= 400 || statusCode == 0) {
-                urlDetails.putIfAbsent(statusCode, new UrlDetails(listOfLinks.size(), listOfLinks));
+            if (statusCode == 404) {
+                urlDetails[0] = new UrlDetails(listOfLinks.size(), listOfLinks);
             }
         });
-        return urlDetails;
+        return urlDetails[0];
+    }
+
+    private UrlDetails getUrlDetails50x(){
+        final UrlDetails[] urlDetails = {null};
+        result.forEach((statusCode, listOfLinks) -> {
+            if (statusCode >= 500 || statusCode == 0) {
+                urlDetails[0] = new UrlDetails(listOfLinks.size(), listOfLinks);
+            }
+        });
+        return urlDetails[0];
     }
 
     private String getUrl() {

@@ -48,7 +48,6 @@ public class DeadLinks implements Serializable {
         code = connection.getResponseCode();
         if (code == 404) {
           this.err404.urls.add(href);
-//            this.err404.++;
           this.dead++;
         }
         if (code >= 500 && code < 600) {

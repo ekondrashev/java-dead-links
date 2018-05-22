@@ -9,7 +9,7 @@ public class DeadLinksReport implements Serializable {
     private static final long serialVersionUID = 1234L;
 
     private String url;
-    @JsonProperty(value = "400")
+    @JsonProperty(value = "404")
     private UrlDetails urlDetails400;
     @JsonProperty(value = "50x")
     private UrlDetails urlDetails50x;

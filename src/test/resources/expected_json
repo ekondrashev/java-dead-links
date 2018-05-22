@@ -1,9 +1,13 @@
 {
   "url" : "https://junit.org/junit5/",
-  "dead" : 5,
+  "dead" : 0,
   "total" : 12,
+  "404" : {
+    "size" : 0,
+    "urls" : [ ]
+  },
   "50x" : {
-    "size" : 5,
-    "urls" : [ "/junit5/", "/junit5/docs/current/user-guide", "/junit5/docs/current/api", "/junit5/docs/current/user-guide", "/junit5/docs/current/api" ]
+    "size" : 0,
+    "urls" : [ ]
   }
 }

@@ -3,7 +3,7 @@ import org.junit.*;
 import org.junit.runner.*;
 import org.junit.runners.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Java code implementing the below contract;
@@ -24,7 +24,19 @@ public class DeadLinksTest {
 
   @Test
   public void out() {
-    String expectedResult = "{\"urlForCheck\":\"http://roofing.tilda.ws\",\"err404\":{\"size\":1,\"urls\":[\"http://roofing.tilda.ws/somepage.html\"]},\"err50x\":{\"size\":0,\"urls\":[]},\"dead\":1,\"total\":14}";
+    String expectedResult = "{\n"
+        + "\t\"url\":\" http://roofing.tilda.ws\",\n"
+        + "\t\"404\": {\n"
+        + "\t\t\"size\": 1,\n"
+        + "\t\t\"urls\": [http://roofing.tilda.ws/somepage.html]\t\n"
+        + "},\n"
+        + "\t\"50x\": {\n"
+        + "\t\t\"size\": 0,\n"
+        + "\t\t\"urls\": []\t\n"
+        + "},\n"
+        + "\t\"dead\": 1,\n"
+        + "\t\"total\": 14\n"
+        + "}";
     FindDeadLinksApp.main(new String[]{"http://roofing.tilda.ws"});
     assertEquals(expectedResult.trim(), outContent.toString().trim());
   }

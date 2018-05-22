@@ -8,9 +8,9 @@ import org.jsoup.select.*;
 public class DeadLinks implements Serializable {
 
   private static final long serialVersionUID = 1964397694782582852L;
-  private String urlForCheck;
   private final Err404 err404 = new Err404();
   private final Err50x err50x = new Err50x();
+  private String urlForCheck;
   private int dead = 0;
   private int total = 0;
 
@@ -21,100 +21,70 @@ public class DeadLinks implements Serializable {
 
 
   public void findDeadLinks() throws IOException, IllegalArgumentException {
-      String protocol = urlForCheck.split("://")[0];
-      Document document = Jsoup.connect(urlForCheck).get();
-      Elements links = document.select("a[href]");
+    String protocol = urlForCheck.split("://")[0];
+    Document document = Jsoup.connect(urlForCheck).get();
+    Elements links = document.select("a[href]");
 
-      for (Element link : links) {
-        //or try HttpClient
-        String href = link.attr("href");
-        if (!(href.contains("tel:")) && !(href.contains("javascript:"))) {
-          if (href.matches("^//.*?")) {
-            href = protocol + ":" + href;
-          } else if (!href.matches("^http.*?")) {
-            if (!href.matches("^/.*?")) {
-              href = urlForCheck + "/" + href;
-            } else {
-              href = urlForCheck + href;
-            }
-          }
-          URL url = new URL(href);
-          HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-          connection.setRequestMethod("GET");
-          connection.connect();
-
-          int code = -1;
-          code = connection.getResponseCode();
-          if (code == 404) {
-            this.err404.urls.add(href);
-            this.err404.size++;
-            this.dead++;
-          }
-          if (code >= 500 && code < 600) {
-            this.err50x.urls.add(href);
-            this.err50x.size++;
-            this.dead++;
+    for (Element link : links) {
+      //or try HttpClient
+      String href = link.attr("href");
+      if (!(href.contains("tel:")) && !(href.contains("javascript:"))) {
+        if (href.matches("^//.*?")) {
+          href = protocol + ":" + href;
+        } else if (!href.matches("^http.*?")) {
+          if (!href.matches("^/.*?")) {
+            href = urlForCheck + "/" + href;
           } else {
-            this.total++;
+            href = urlForCheck + href;
           }
         }
+        URL url = new URL(href);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("GET");
+        connection.connect();
+
+        int code = -1;
+        code = connection.getResponseCode();
+        if (code == 404) {
+          this.err404.urls.add(href);
+//            this.err404.++;
+          this.dead++;
+        }
+        if (code >= 500 && code < 600) {
+          this.err50x.urls.add(href);
+          this.dead++;
+        } else {
+          this.total++;
+        }
       }
+    }
   }
 
   @Override
   public String toString() {
-    return new com.google.gson.Gson().toJson(this);
+    return "{\n" +
+        "\t\"url\":\" " + urlForCheck + "\",\n" +
+        "\t\"404\": {\n" +
+        "\t\t\"size\": " + err404.urls.size() + ",\n" +
+        "\t\t\"urls\": " + err404.urls +
+        "\t\n},\n" +
+        "\t\"50x\": {\n" +
+        "\t\t\"size\": " + err50x.urls.size() + ",\n" +
+        "\t\t\"urls\": " + err50x.urls +
+        "\t\n},\n" +
+        "\t\"dead\": " + dead + ",\n" +
+        "\t\"total\": " + total +
+        "\n}";
   }
 
   private class Err404 {
 
-    private int size = 0;
     private ArrayList<String> urls = new ArrayList<>();
-
-//    @Override
-//    public String toString() {
-//      Object[] array = urls.toArray();
-//      return "404{" +
-//          "size:" + array.length +
-//          "urls:" + Arrays.toString(array) +
-//          '}';
-//    }
   }
 
   private class Err50x {
 
-    private int size = 0;
     private ArrayList<String> urls = new ArrayList<>();
-
-//    @Override
-//    public String toString() {
-//      Object[] array = urls.toArray();
-//      return "50x{" +
-//          "size:" + array.length +
-//          "urls:" + Arrays.toString(array) +
-//          '}';
-//    }
   }
 }
-
-
-
-
-
-
-/*
-    return "{\n"
-        + "    \"url\": \"" + this.urlForCheck + "\""
-        + "    \"404\":  {\n"
-        + "        \"size\":" + this.err404.size() + ","
-        + "\t\"urls\":" + this.err404.toString()
-        + "    },\n"
-        + "    \"50x\": {\n"
-        + "        \"size\":" + this.err50x.size() + ","
-        + "\t\"urls\":" + this.err50x.toString()
-        + "    }\n"
-        + "    \"dead\":" + this.dead+","
-        + "    \"total\":" + this.total
-        + "}";
- */

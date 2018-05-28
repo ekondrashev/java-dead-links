@@ -15,15 +15,19 @@ public class HTTPClient {
     private ArrayList<URL> code404 = new ArrayList<>();
     private ArrayList<URL> code50x = new ArrayList<>();
     private ArrayList<URL> otherCodes = new ArrayList<>();
+    private String url;
+
+    public HTTPClient(String url) {
+        this.url = url;
+    }
 
     public static void main(String[] args) {
-        HTTPClient httpClient = new HTTPClient();
-        System.out.println(httpClient.foundDeadLinks("https://mellivorasoft.com/"));
+        HTTPClient httpClient = new HTTPClient(args[0]);
+        System.out.print(httpClient.toString());
     }
 
     private static ArrayList<URL> getLinks(String url)
     {
-        // Use Jsoup lib to get list of links from a page
         ArrayList<URL> urls = new ArrayList<>();
         try {
             Document document = Jsoup.connect(url).get();
@@ -38,8 +42,6 @@ public class HTTPClient {
         return urls;
     }
 
-    //The verifyUrl method verifies the url parameter passed as the input parameter by matching it with the regular expression.
-    //If the match is successful, then it returns true; otherwise, it returns false.
     private boolean verifyUrl(String url) {
         String urlRegex = "^(http|https)://[-a-zA-Z0-9+&@#/%?=~_|,!:.;]*[-a-zA-Z0-9+@#/%=&_|]";
         Pattern pattern = Pattern.compile(urlRegex);
@@ -47,28 +49,22 @@ public class HTTPClient {
         return m.matches();
     }
 
-    public String foundDeadLinks(String url) {
-
-        // Create local variable to store Response Codes
+    @Override
+    public String toString() {
         Integer code;
 
         if (verifyUrl(url)) {
             try {
-                // Use getLinks to return list of links from website specified at command-line
                 ArrayList<URL> urls = getLinks(url);
 
-                // Iterate through the Urls
                 for (int i = 0; i < urls.size(); i++) {
                     try {
-                        // Connect to the URL and add Response Code to Codes Array
                         HttpURLConnection connect = (HttpURLConnection) urls.get(i).openConnection();
                         code = connect.getResponseCode();
 
-                        // If Response Code equal 404, then add this URL to ArrayList with code404
                         if (code == 404) {
                             code404.add(urls.get(i));
                         }
-                        // If Response Code great or equal 500, then add this URL to ArrayList with code50x
                         else if (code >= 500){
                             code50x.add(urls.get(i));
                         }
@@ -77,7 +73,6 @@ public class HTTPClient {
                         }
                         connect.disconnect();
                     }
-                    // If the connection fails catch exception
                     catch (IOException e) {
                         e.printStackTrace();
                     }

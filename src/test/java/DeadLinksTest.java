@@ -25,14 +25,13 @@ public class DeadLinksTest {
 
     @Test
     public void testEnteredURLIsIncorrect() {
-        HTTPClient httpClient = new HTTPClient();
-        assertEquals(httpClient.foundDeadLinks("hts://www.google.com/"),"You input incorrect URL");
+        HTTPClient.main(new String[] {"hts://www.google.com/"});
+        assertEquals("You input incorrect URL", outContent.toString());
     }
 
     @Test
     public void testFoundDeadLinksAndPrintResultInPrettyJson() {
-        HTTPClient httpClient = new HTTPClient();
-        System.out.println(httpClient.foundDeadLinks("https://mellivorasoft.com/"));
+        HTTPClient.main(new String[] {"https://mellivorasoft.com/"});
 
         String expectedResult = "{\r\n" +
                 "  \"url\" : \"https://mellivorasoft.com/\",\r\n" +
@@ -42,7 +41,7 @@ public class DeadLinksTest {
                 "  },\r\n" +
                 "  \"dead\" : 1,\r\n" +
                 "  \"total\" : 25\r\n" +
-                "}\r\n";
+                "}";
 
         assertEquals(expectedResult, outContent.toString());
     }

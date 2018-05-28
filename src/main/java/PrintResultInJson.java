@@ -44,7 +44,6 @@ public class PrintResultInJson {
         return convertToPrettyJSONUtility(obj);
     }
 
-    // Prettify JSON Utility
     private String convertToPrettyJSONUtility(JSONOrderedObject simpleJSON) {
 
         String jsonPrettyStr = simpleJSON.toJSONString();
@@ -59,7 +58,6 @@ public class PrintResultInJson {
         return jsonPrettyStr;
     }
 
-    //Create class JSONOrderedObject which use LinkedHashMap for save order of added Json elements
     class JSONOrderedObject extends LinkedHashMap<String, Object> implements Map<String, Object>, JSONAware, JSONStreamAware {
 
         @Override

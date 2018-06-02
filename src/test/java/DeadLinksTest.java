@@ -30,8 +30,12 @@ public class DeadLinksTest {
     expectedOutput = gson.toJson(jsonObject);
   }
 
+  /**
+   * Main can return a report about checking html page for dead links
+   */
+
   @Test
-  public void MainOutputTest() {
+  public void returnsReportAboutDeadLinks() {
     Main.main(new String[]{"http://roofing.tilda.ws"});
     assertEquals(expectedOutput.trim(), actualOutput.toString().trim());
   }
@@ -40,7 +44,7 @@ public class DeadLinksTest {
    * Main can cause an error if the URL is incorrect
    */
   @Test
-  public void MainOutputErrorTest() {
+  public void returnsErrorInChecking() {
     String expectedError = "Illegal URL\n";
     Main.main(new String[]{"asdasd"});
     assertEquals(expectedError.trim(), actualErrOutput.toString().trim());

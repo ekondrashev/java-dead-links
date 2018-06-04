@@ -17,16 +17,12 @@ interface Links extends Iterable<URL> {
     private int dead = 0;
     private int total = 0;
 
-    public HTML(String urlForCheck) {
+    public HTML(String urlForCheck, HTTP httpDefault) {
       urlForCheck = urlForCheck.trim();
       this.urlForCheck = urlForCheck.trim();
       this.err404 = new Err404();
       this.err50x = new Err50x();
-      try {
-        findDeadLinks();
-      } catch (IOException e) {
-        System.err.print(e.getMessage());
-      }
+      generateReport(httpDefault);
     }
 
 
@@ -34,43 +30,44 @@ interface Links extends Iterable<URL> {
     public Iterator<URL> iterator() {
       this.urls = new ArrayList<>();
       try {
-        String protocol = urlForCheck.split("://")[0];
-        Document document = Jsoup.connect(urlForCheck).get();
-        Elements links = document.select("a[href]");
-
-        for (Element link : links) {
-          String href = link.attr("href");
-          if (!(href.contains("tel:")) && !(href.contains("javascript:"))) {
-            if (href.matches("^//.*?")) {
-              href = protocol + ":" + href;
-            } else if (!href.matches("^http.*?")) {
-              if (!href.matches("^/.*?")) {
-                href = urlForCheck + "/" + href;
-              } else {
-                href = urlForCheck + href;
-              }
-            }
-            this.urls.add(new URL(href));
-          }
-        }
+        parseHrefs();
       } catch (Exception e) {
         System.err.println("Illegal URL");
       }
       return this.urls.iterator();
     }
 
-    private void findDeadLinks() throws IOException {
+    private void parseHrefs() throws IOException {
+      String protocol = urlForCheck.split("://")[0];
+      Document document = Jsoup.connect(urlForCheck).get();
+      Elements links = document.select("a[href]");
+
+      for (Element link : links) {
+        String href = link.attr("href");
+        if (!(href.contains("tel:")) && !(href.contains("javascript:"))) {
+          if (href.matches("^//.*?")) {
+            href = protocol + ":" + href;
+          } else if (!href.matches("^http.*?")) {
+            if (!href.matches("^/.*?")) {
+              href = urlForCheck + "/" + href;
+            } else {
+              href = urlForCheck + href;
+            }
+          }
+          this.urls.add(new URL(href));
+        }
+      }
+    }
+
+    private void generateReport(HTTP http) {
       for (URL url : this) {
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
-        int code = connection.getResponseCode();
-        if (code == 404) {
+        int responseCode = http.code(url);
+        if (responseCode == 404) {
           this.err404.urls.add(url.toString());
           this.err404.size++;
           this.dead++;
         }
-        if (code >= 500 && code < 600) {
+        if (responseCode >= 500 && responseCode < 600) {
           this.err50x.urls.add(url.toString());
           this.err50x.size++;
           this.dead++;

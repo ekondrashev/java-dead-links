@@ -1,6 +1,8 @@
 # Important considerations
 * Attention to requirement details counts
 * No commented code
+* No unnecessary changes in PR(like README.md, iml files, etc)
+* Each PR should be reated to current `stepX` branch
 
 ## What's new
 This step introduced `HTTP` abstraction layer. 
@@ -19,6 +21,7 @@ that Links.HTML should expect as second argument.
 # ~~Step 3~~
 Basing on PR from `Step 2`, rework the code in a way to meet following requirements
 * Move expected JSON(YML/XML) from test sources out to `src/test/resources` reading the it with `Class.getResource*`
+  * Make sure to name expected resourse using underscores(lowercase) + format its content
 * Study [Typical Mistakes in Java Code](https://www.yegor256.com/2014/04/27/typical-mistakes-in-java-code.html) and make sure that at least the test case method namings follow [described](https://www.yegor256.com/2014/04/27/typical-mistakes-in-java-code.html#test-method-names) convention.
 
 

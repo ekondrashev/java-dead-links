@@ -19,13 +19,16 @@ public class MainTestIt {
         expectedOutput = "";
         InputStream resourceAsStream = this.getClass()
                 .getClassLoader()
-                .getResourceAsStream("main_test-expected_output.json");
+                .getResourceAsStream("main_test_expected_output.json");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(resourceAsStream));
 
         String line;
         while ((line = bufferedReader.readLine()) != null) {
             expectedOutput += line;
         }
+        expectedOutput = expectedOutput.replaceAll(" ", "");
+        expectedOutput = expectedOutput.replaceAll("\n", "");
+        expectedOutput = expectedOutput.replaceAll("\t", "");
     }
 
     @After
@@ -36,7 +39,7 @@ public class MainTestIt {
 
 
     @Test
-    public void testDeadLinksMain_returnsJsonOutput() {
+    public void testDeadLinksMainReturnsJsonOutput() {
         Main.main(new String[] {url});
         Assert.assertEquals(expectedOutput, outContent.toString().trim());
     }

@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>deadlinks</groupId>
-  <artifactId>deadlinks-step4</artifactId>
+  <artifactId>deadlinks-offline-test</artifactId>
   <version>1.0</version>
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>

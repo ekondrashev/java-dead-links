@@ -17,8 +17,6 @@ interface HTTP {
         connection.connect();
         return connection.getResponseCode();
       } catch (IOException e) {
-        System.err.println("Connection Error:");
-        System.err.println(e.getMessage());
         return -1;
       }
     }

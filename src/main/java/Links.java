@@ -31,8 +31,14 @@ interface Links extends Iterable<URL> {
       this.urls = new ArrayList<>();
       try {
         parseHrefs();
-      } catch (Exception e) {
+      }
+      catch (IllegalArgumentException iae) {
         System.err.println("Illegal URL");
+      }
+      catch (UnknownHostException hostException){
+        System.err.println("Connection error");
+      }catch (Exception e) {
+        e.printStackTrace();
       }
       return this.urls.iterator();
     }

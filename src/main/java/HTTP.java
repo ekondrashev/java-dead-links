@@ -1,11 +1,19 @@
-import java.io.*;
-import java.net.*;
+import java.net.URL;
 
 interface HTTP {
 
-  int code(URL url);
+    Response response(URL url);
 
-  class Default implements HTTP {
+    interface Response {
+        int code();
+        String asString();
+    }
+
+}
+
+
+/*
+class Default implements HTTP {
 
     private HttpURLConnection connection;
 
@@ -23,4 +31,4 @@ interface HTTP {
       }
     }
   }
-}
+ */

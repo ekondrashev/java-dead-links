@@ -61,7 +61,8 @@ interface Links extends Iterable<URL> {
 
     private void generateReport(HTTP http) {
       for (URL url : this) {
-        int responseCode = http.code(url);
+        HTTP.Response response = http.response(url);
+        int responseCode = response.code();
         if (responseCode == 404) {
           this.err404.urls.add(url.toString());
           this.err404.size++;

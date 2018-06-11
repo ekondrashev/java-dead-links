@@ -1,0 +1,13 @@
+{
+  "url" : "https://junit.org/junit5/",
+  "dead" : 0,
+  "total" : 12,
+  "404" : {
+    "size" : 0,
+    "urls" : [ ]
+  },
+  "50x" : {
+    "size" : 0,
+    "urls" : [ ]
+  }
+}

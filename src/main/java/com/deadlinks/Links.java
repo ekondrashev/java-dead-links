@@ -257,17 +257,8 @@ interface Links extends Iterable<URL> {
             return size;
         }
 
-        public void setSize(int size) {
-            this.size = size;
-        }
-
         public List<String> getUrls() {
             return urls;
         }
-
-        public void setUrls(List<String> urls) {
-            this.urls = urls;
-        }
     }
-
 }

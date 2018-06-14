@@ -31,13 +31,13 @@ public class MainTest {
     }
 
     @Test
-    public void dead_links_test() throws JsonProcessingException {
+    public void shouldReturn404and50xLinksFromHTMLToJsonFormat() throws JsonProcessingException {
         String[] url ={"https://junit.org/junit5/"};
         Main.main(url);
-        assertEquals(getExpectedValue(), outputContent.toString());
+        assertEquals(returnExpectedValue(), outputContent.toString());
     }
 
-    private String getExpectedValue() {
+    private String returnExpectedValue() {
         String expectedJson = "";
         try {
             expectedJson = Files.lines(

@@ -20,7 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 interface Links extends Iterable<URL> {
-
     @Override
     Iterator<URL> iterator();
 
@@ -36,7 +35,7 @@ interface Links extends Iterable<URL> {
         private List<String> linksFromHtml;
         private DeadLinksReport deadLinksReport;
 
-        public HTML(String arg) {
+        public HTML(String arg, HTTP.Default aDefault) {
             super();
             this.arg = arg;
             result = new HashMap<>();
@@ -258,19 +257,8 @@ interface Links extends Iterable<URL> {
             return size;
         }
 
-        public void setSize(int size) {
-            this.size = size;
-        }
-
         public List<String> getUrls() {
             return urls;
         }
-
-        public void setUrls(List<String> urls) {
-            this.urls = urls;
-        }
     }
-
 }
-
-

@@ -3,33 +3,33 @@ import java.net.*;
 
 interface HTTP {
 
-  Response response(URL url);
+    Response response(URL url);
 
-  interface Response {
-
-    int code();
-
-    String asString();
-  }
+    interface Response {
+        int code();
+        String asString();
+        //todo:
+        void recordIntoJson();
+    }
 
   class Default implements HTTP {
 
     private HttpURLConnection connection;
+    private String responseMessage;
 
     @Override
     public Response response(URL url) {
       return new Response() {
-        private String responseMessage;
         @Override
         public int code() {
           try {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
-            this.responseMessage = connection.getResponseMessage();
+            responseMessage = connection.getContentType();
             return connection.getResponseCode();
           } catch (IOException e) {
-            this.responseMessage = e.getMessage();
+            responseMessage = e.getMessage();
             System.err.println("Connection Error:");
             System.err.println(e.getMessage());
             return -1;
@@ -38,10 +38,24 @@ interface HTTP {
 
         @Override
         public String asString() {
-          return this.responseMessage;
+          return responseMessage;
+        }
+
+        @Override
+        public void recordIntoJson() {
+          if (Main.recordingJson == null) {
+            System.out.println("Recording into the file is disabled");
+            return;
+          }
+          File fileRec = new File(Main.recordingJson);
+          try (FileWriter fileWriter = new FileWriter(fileRec, false)) {
+            fileWriter.write("Some string");
+            fileWriter.flush();
+          } catch (IOException ioe) {
+            System.err.println(ioe.toString());
+          }
         }
       };
     }
-
   }
 }

@@ -11,7 +11,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -34,10 +33,12 @@ interface Links extends Iterable<URL> {
         private Map<Integer, List<String>> result;
         private List<String> linksFromHtml;
         private DeadLinksReport deadLinksReport;
+        private HTTP http;
 
-        public HTML(String arg, HTTP.Default aDefault) {
+        public HTML(String arg, HTTP http) {
             super();
             this.arg = arg;
+            this.http = http;
             result = new HashMap<>();
             linksFromHtml = getLinksFromHtml();
             deadLinksReport = getDeadLinksReport();
@@ -94,23 +95,14 @@ interface Links extends Iterable<URL> {
 
             Iterator<URL> urlIterator = iterator();
             while (urlIterator.hasNext()) {
-                HttpURLConnection connection = null;
                 URL url = urlIterator.next();
-                try {
-                    connection = (HttpURLConnection) url.openConnection();
-                    if (connection.getResponseCode() == HTTP_OK) {
-                        successUrls.add(url.getPath());
-                        result.putIfAbsent(connection.getResponseCode(), successUrls);
-                    } else {
-                        failedUrls.add(url.getPath());
-                        result.putIfAbsent(connection.getResponseCode(), failedUrls);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
+                int code = http.response(url).code();
+                if (code == HTTP_OK) {
+                    successUrls.add(url.getPath());
+                    result.putIfAbsent(code, successUrls);
+                } else {
+                    failedUrls.add(url.getPath());
+                    result.putIfAbsent(code, failedUrls);
                 }
             }
             return result;

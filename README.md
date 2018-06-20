@@ -3,9 +3,9 @@
 * No commented code
 
 ## What's new
-This step introduced `com.deadlinks.HTTP` abstraction layer. 
+This step introduced `HTTP` abstraction layer. 
 ```
-interface com.deadlinks.HTTP {
+interface HTTP {
 
     Response response(URL url);
 
@@ -20,7 +20,7 @@ The purpose of this interface is to hide all the transport specifics simplifying
 
 # Step 4
 
-Basing on PR from previous step, rework the code, introducing `com.deadlinks.HTTP.Default` (and com.deadlinks.HTTP transport layer internal `com.deadlinks.HTTP.Response.Default`) implementation
+Basing on PR from previous step, rework the code, introducing `HTTP.Default` (and HTTP transport layer internal `HTTP.Response.Default`) implementation
 that `Links.HTML` should expect as second argument. 
 Try moving existing code related to the transport aspects to that implementation. The test should still be green.
 
@@ -31,9 +31,9 @@ Basing on PR from `Step 2`, rework the code in a way to meet following requireme
 
 
 # ~~Step 2~~
-Having a PR from `Step 1` for the `master` branch, rework the code in a way so the client code from [`com.deadlinks.Main.java`](https://github.com/ekondrashev/java-dead-links/blob/step2/src/main/java/com.deadlinks.Main.java) compiles and the output still produces result making test green:
+Having a PR from `Step 1` for the `master` branch, rework the code in a way so the client code from [`Main.java`](https://github.com/ekondrashev/java-dead-links/blob/step2/src/main/java/Main.java) compiles and the output still produces result making test green:
 ```
-class com.deadlinks.Main {
+class Main {
     public static void main(String[] args) {
         Links html = new Links.HTML(args[0]);
         System.out.println(html.toString());

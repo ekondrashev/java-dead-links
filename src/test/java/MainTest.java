@@ -25,13 +25,13 @@ public class MainTest {
 
     @Test
     public void testEnteredURLIsIncorrect() {
-        System.out.print(new Links.HTML("hts://www.google.com/").toString());
-        assertEquals("You input incorrect URL", outContent.toString());
+        System.out.println(new Links.HTML("hts://www.google.com/").toString());
+        assertEquals("You input incorrect URL\r\n", outContent.toString());
     }
 
     @Test
     public void testFoundDeadLinksAndPrintResultInPrettyJson() {
-        System.out.print(new Links.HTML("https://mellivorasoft.com/").toString());
+        System.out.println(new Links.HTML("https://mellivorasoft.com/").toString());
 
         String expectedResult = "{\r\n" +
                 "  \"url\" : \"https://mellivorasoft.com/\",\r\n" +
@@ -41,7 +41,7 @@ public class MainTest {
                 "  },\r\n" +
                 "  \"dead\" : 1,\r\n" +
                 "  \"total\" : 25\r\n" +
-                "}";
+                "}\r\n";
 
         assertEquals(expectedResult, outContent.toString());
     }

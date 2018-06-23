@@ -41,7 +41,6 @@ interface HTTP {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if (code == 0) throw new RuntimeException("Invalid link");
                     return code;
                 }
 

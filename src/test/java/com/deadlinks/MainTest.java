@@ -32,7 +32,7 @@ public class MainTest {
 
     @Test
     public void shouldReturn404and50xLinksFromHTMLToJsonFormat() throws JsonProcessingException {
-        String[] url ={"https://junit.org/junit5/"};
+        String[] url ={"https://www.yegor256.com/elegant-objects.html"};
         Main.main(url);
         assertEquals(returnExpectedValue(), outputContent.toString());
     }

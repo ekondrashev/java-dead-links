@@ -1,3 +1,4 @@
+package com.deadlinks;
 
 class Main {
     public static void main(String[] args) {

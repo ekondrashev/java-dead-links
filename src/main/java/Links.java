@@ -93,7 +93,6 @@ interface Links extends Iterable<URL> {
             Gson err404Gson = new GsonBuilder().setPrettyPrinting().create();
             Gson err50xGson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject jsonObject = new JsonObject();
-
             jsonObject.addProperty("url", urlForCheck);
             jsonObject.add("404", err404Gson.toJsonTree(this.err404));
             jsonObject.add("50x", err50xGson.toJsonTree(this.err50x));

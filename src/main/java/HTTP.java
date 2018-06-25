@@ -1,5 +1,12 @@
-import java.io.*;
-import java.net.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 interface HTTP {
 
@@ -8,13 +15,13 @@ interface HTTP {
     interface Response {
         int code();
         String asString();
-        //todo:
-        void recordIntoJson();
+
     }
 
   class Default implements HTTP {
 
     private HttpURLConnection connection;
+      private int responseCode;
     private String responseMessage;
 
     @Override
@@ -26,8 +33,12 @@ interface HTTP {
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
-            responseMessage = connection.getContentType();
-            return connection.getResponseCode();
+              responseMessage = connection.getContentType().split(";")[0];
+              responseCode = connection.getResponseCode();
+              if (Main.recordingJson != null) {
+                  this.recordIntoJson();
+              }
+              return responseCode;
           } catch (IOException e) {
             responseMessage = e.getMessage();
             System.err.println("Connection Error:");
@@ -41,16 +52,15 @@ interface HTTP {
           return responseMessage;
         }
 
-        @Override
-        public void recordIntoJson() {
-          if (Main.recordingJson == null) {
-            System.out.println("Recording into the file is disabled");
-            return;
-          }
-          File fileRec = new File(Main.recordingJson);
-          try (FileWriter fileWriter = new FileWriter(fileRec, false)) {
-            fileWriter.write("Some string");
-            fileWriter.flush();
+          private void recordIntoJson() {
+              try (Writer writer = new FileWriter("src/test/resources/" + Main.recordingJson)) {
+                  Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                  JsonObject recordingObject = new JsonObject();
+                  JsonObject urlJson = new JsonObject();
+                  urlJson.addProperty("code", responseCode);
+                  urlJson.addProperty("asString", responseMessage);
+                  recordingObject.add(url.toString(), urlJson);
+                  gson.toJson(recordingObject, writer);
           } catch (IOException ioe) {
             System.err.println(ioe.toString());
           }

@@ -26,6 +26,10 @@ interface HTTP {
         private String responseMessage;
         private String recordPath;
 
+        public Default(String recordPath) {
+            this.recordPath = recordPath;
+        }
+
         @Override
         public Response response(URL url) {
             return new Response() {
@@ -37,7 +41,7 @@ interface HTTP {
                         connection.connect();
                         responseMessage = connection.getContentType().split(";")[0];
                         responseCode = connection.getResponseCode();
-                        if (Main.recordingJson != null && recordPath != null) {
+                        if (Main.recordingJson != null) {
                             this.recordIntoJson();
                         }
                         return responseCode;

@@ -2,25 +2,32 @@
 * Attention to requirement details counts
 * No commented code
 
-## What's new
-This step introduced `HTTP` abstraction layer. 
-```
-interface HTTP {
+# Step 5. Testing mode introduction
 
-    Response response(URL url);
+Using PR from the step below, rework the code so the program recognizes 
+`--enable-http-recording=http_recording.json` cmdline option, enabling recording of all the HTTP responses into specified 
+file for testing purposes(`http_recording.json` will be used in further steps, like enable mocking).
 
-    interface Response {
-        int code();
-        String asString();
+## Recording file example
+
+```json
+{ "url_1": {
+  "code": 404,
+  "asString": "html"
     }
-
 }
 ```
-The purpose of this interface is to hide all the transport specifics simplifying `Links.HTML` logic.
 
-# Step 4
+Please note that 
+* `asString` value should be considered optional, since string representation of HTTP response is not 
+always needed
+* if the recording json file exists, it should be replaced with a new one
+* test should still be green
 
-Basing on PR from previous step, rework the code, introducing `HTTP.Default` (and HTTP transport layer internal `HTTP.Response.Default`) implementation
+
+# ~~Step 4~~
+
+Basing on PR from previous step, rework the code, introducing `HTTP.Default` implementation 
 that `Links.HTML` should expect as second argument. 
 Try moving existing code related to the transport aspects to that implementation. The test should still be green.
 

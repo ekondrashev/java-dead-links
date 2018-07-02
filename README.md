@@ -19,6 +19,7 @@ file for testing purposes(`http_recording.json` will be used in further steps, l
 ```
 
 Please note that 
+* the path to the record file should be passed to `HTTP.Default`, meaning the transport layer will be responsible for the recording
 * `asString` value should be considered optional, since string representation of HTTP response is not 
 always needed
 * if the recording json file exists, it should be replaced with a new one

@@ -3,7 +3,7 @@ package com.deadlinks;
 import java.io.File;
 
 class Main {
-    public static String PATHNAME = "src/main/resources/";
+    public static String PATHNAME = "src/test/resources/";
     public static boolean recordable = false;
 
     public static void main(String[] args) {

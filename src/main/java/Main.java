@@ -6,7 +6,7 @@ class Main {
             recordingJson = (args[1].split("--enable-http-recording="))[1];
         }
         if (args.length > 0) {
-            Links html = new Links.HTML(args[0], new HTTP.Default("D:\\"));
+            Links html = new Links.HTML(args[0], new HTTP.Default());
             System.out.println(html.toString());
         }
     }

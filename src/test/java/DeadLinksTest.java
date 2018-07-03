@@ -1,11 +1,17 @@
-import com.google.gson.*;
-import java.io.*;
-import java.net.*;
-import org.junit.*;
-import org.junit.runner.*;
-import org.junit.runners.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import static org.junit.Assert.*;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
 public class DeadLinksTest {
@@ -34,7 +40,6 @@ public class DeadLinksTest {
   /**
    * Main can return a report about checking html page for dead links
    */
-
   @Test
   public void returnsReportAboutDeadLinks() {
     Main.main(new String[]{"http://roofing.tilda.ws"});

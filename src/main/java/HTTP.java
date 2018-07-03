@@ -15,7 +15,6 @@ interface HTTP {
     interface Response {
         int code();
         String asString();
-
     }
 
     class Default implements HTTP {
@@ -29,8 +28,6 @@ interface HTTP {
             this.recordPath = recordPath;
         }
 
-        public Default() {
-        }
 
         @Override
         public Response response(URL url) {
@@ -76,12 +73,5 @@ interface HTTP {
             };
         }
 
-        public String getRecordPath() {
-            return recordPath;
-        }
-
-        public void setRecordPath(String recordPath) {
-            this.recordPath = recordPath;
-        }
     }
 }

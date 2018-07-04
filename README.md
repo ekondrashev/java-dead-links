@@ -24,6 +24,7 @@ Please note that
 always needed
 * if the recording json file exists, it should be replaced with a new one
 * test should still be green
+* no dependency on Main from interface classes
 
 
 # ~~Step 4~~

@@ -2,11 +2,20 @@
 * Attention to requirement details counts
 * No commented code
 
-# Step 5. Testing mode introduction
+# Goal: testing execution mode introduction.
+
+So far we have only live tests sticking to the responses provided by particular HTTP server,
+with no possibility to model different scenarios, like 404, 501, 502 etc response codes. 
+
+Lets implement a recording and play(recording) logic, so we can
+save/mock HTTP responses modeling cases we need. 
+This will also give a possibility to switch to offline tests with no actual HTTP requests/responses being done
+
+# Step 5. HTTP recording cmdline option
 
 Using PR from the step below, rework the code so the program recognizes 
-`--enable-http-recording=http_recording.json` cmdline option, enabling recording of all the HTTP responses into specified 
-file for testing purposes(`http_recording.json` will be used in further steps, like enable mocking).
+`--enable-http-recording=<http_recording_file_path>` cmdline option, enabling recording of all the HTTP responses into 
+specified  file(`http_recording_file_path` is a path to save recordings to)
 
 ## Recording file example
 

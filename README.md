@@ -11,7 +11,17 @@ Lets implement a recording and play(recording) logic, so we can
 save/mock HTTP responses modeling cases we need. 
 This will also give a possibility to switch to offline tests with no actual HTTP requests/responses being done
 
-# Step 5. HTTP recording cmdline option
+# Step 6. Test for the recording cmdline option
+
+Using PR from the step below, implement a test that will be passing new `--enable-http-recording` option with 
+a path pointing to temporary storage, that should be cleaned up after test execution finishes. 
+Please see https://junit.org/junit4/javadoc/4.12/org/junit/rules/TemporaryFolder.html to implement such a temporary 
+storage.
+
+Please also remember to assert CRC sum of a created recording file instead of matching against the content.
+
+
+# ~~Step 5. HTTP recording cmdline option~~
 
 Using PR from the step below, rework the code so the program recognizes 
 `--enable-http-recording=<http_recording_file_path>` cmdline option, enabling recording of all the HTTP responses into 

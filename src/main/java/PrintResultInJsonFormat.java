@@ -38,7 +38,7 @@ class PrintResultInJsonFormat {
         return convertToPrettyJSONUtility(obj);
     }
 
-    private String convertToPrettyJSONUtility(JSONOrderedObject simpleJSON) {
+    protected String convertToPrettyJSONUtility(JSONOrderedObject simpleJSON) {
 
         String jsonPrettyStr = simpleJSON.toJSONString();
 

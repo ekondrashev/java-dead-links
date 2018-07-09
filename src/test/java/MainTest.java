@@ -35,8 +35,8 @@ public class MainTest {
 
             expectedOutput = builder.toString();
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

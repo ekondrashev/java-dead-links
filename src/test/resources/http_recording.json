@@ -1,0 +1,6 @@
+{
+  "http://roofing.tilda.ws/somepage.html": {
+    "code": 404,
+    "asString": "text/html"
+  }
+}

@@ -28,6 +28,8 @@ interface HTTP {
             this.recordPath = recordPath;
         }
 
+        public Default() {
+        }
 
         @Override
         public Response response(URL url) {
@@ -40,7 +42,7 @@ interface HTTP {
                         connection.connect();
                         responseMessage = connection.getContentType().split(";")[0];
                         responseCode = connection.getResponseCode();
-                        if (Main.recordingJson != null && recordPath != null) {
+                        if (recordPath != null) {
                             this.recordIntoJson();
                         }
                         return responseCode;
@@ -58,7 +60,7 @@ interface HTTP {
                 }
 
                 private void recordIntoJson() {
-                    try (Writer writer = new FileWriter(recordPath + Main.recordingJson)) {
+                    try (Writer writer = new FileWriter(recordPath)) {
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         JsonObject recordingObject = new JsonObject();
                         JsonObject urlJson = new JsonObject();

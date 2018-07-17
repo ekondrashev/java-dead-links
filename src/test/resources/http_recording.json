@@ -1,0 +1,92 @@
+[
+  {
+    "http://home.mcom.com/home/welcome_docs/example-link.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/guided-tour.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/online-manual.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/faq.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/welcome.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/whats-new.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/whats-cool.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/internet-index.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/internet-search.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/internet-white-pages.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/about-the-internet.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/how-to-create-mosaic-services.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://mosaic.mcom.com/": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/how-to-give-feedback.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  },
+  {
+    "http://home.mcom.com/home/how-to-get-support.html": {
+      "code": 200,
+      "asString": "OK"
+    }
+  }
+]

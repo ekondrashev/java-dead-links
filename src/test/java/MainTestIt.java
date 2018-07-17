@@ -7,6 +7,7 @@ public class MainTestIt {
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private String expectedOutput;
     private String url = "http://home.mcom.com/home/welcome.html";
+    private String cmdlnOption = "--enable-json-recording=src/test/resources/http_recording.json";
 
     @Before
     public void setUpStreams() {
@@ -40,7 +41,7 @@ public class MainTestIt {
 
     @Test
     public void testDeadLinksMainReturnsJsonOutput() {
-        Main.main(new String[] {url});
+        Main.main(new String[] {url, cmdlnOption});
         Assert.assertEquals(expectedOutput, outContent.toString().trim());
     }
 }

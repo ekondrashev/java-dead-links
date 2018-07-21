@@ -2,14 +2,14 @@
 * Attention to requirement details counts
 * No commented code
 
-# Goal: testing execution mode introduction.
+# Goal: Play HTTP recording execution mode introduction.
 
 So far we have only live tests sticking to the responses provided by particular HTTP server,
 with no possibility to model different scenarios, like 404, 501, 502 etc response codes. 
 
 Lets implement a recording and play(recording) logic, so we can
-save/mock HTTP responses modeling cases we need. 
-This will also give a possibility to switch to offline tests with no actual HTTP requests/responses being done
+save/mock HTTP responses modeling cases when needed. 
+This will also give a possibility to switch to offline tests with no actual HTTP requests/responses being done.
 
 # Step 6. Test for the recording cmdline option
 

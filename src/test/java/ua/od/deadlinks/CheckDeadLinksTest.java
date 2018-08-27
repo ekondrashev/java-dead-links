@@ -17,23 +17,22 @@ public class CheckDeadLinksTest {
     private final PrintStream originalErr = System.err;
 
 
-    private final String url = "https://github.com";
+    private final String url = "https://od.isuo.org/ru/vnz/view/id/75905";
     private final String expected = "{\n" +
-            "  \"url\": \"https://github.com\",\n" +
+            "  \"url\": \"https://od.isuo.org/ru/vnz/view/id/75905\",\n" +
             "  \"404\": {\n" +
-            "    \"size\": 3,\n" +
+            "    \"size\": 2,\n" +
             "    \"urls\": [\n" +
-            "      \"\",\n" +
-            "      \"\",\n" +
-            "      \"\"\n" +
+            "      \"http://oadk.opu.ua\",\n" +
+            "      \"oadt.at.ua\"\n" +
             "    ]\n" +
             "  },\n" +
             "  \"50x\": {\n" +
             "    \"size\": 0,\n" +
             "    \"urls\": []\n" +
             "  },\n" +
-            "  \"dead\": 3,\n" +
-            "  \"total\": 76\n" +
+            "  \"dead\": 2,\n" +
+            "  \"total\": 132\n" +
             "}\n";
 
 

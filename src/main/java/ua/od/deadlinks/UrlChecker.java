@@ -81,14 +81,16 @@ public class UrlChecker {
 
         try {
             url = new URL(link);
-        if(link.startsWith("https")) {
-            connection = (HttpsURLConnection) url.openConnection();
-        } else if (link.startsWith("http")){
-            connection = (HttpURLConnection) url.openConnection();
-        }
-             code = connection.getResponseCode();
+            if(link.startsWith("https")) {
+                connection = (HttpsURLConnection) url.openConnection();
+            } else if (link.startsWith("http")){
+                connection = (HttpURLConnection) url.openConnection();
+            }
+            connection.setConnectTimeout(5000);
+            code = connection.getResponseCode();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            code = 404;
         } finally {
             if(connection != null) connection.disconnect();
         }

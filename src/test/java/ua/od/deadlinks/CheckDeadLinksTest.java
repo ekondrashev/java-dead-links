@@ -21,18 +21,17 @@ public class CheckDeadLinksTest {
     private final String expected = "{\n" +
             "  \"url\": \"https://od.isuo.org/ru/vnz/view/id/75905\",\n" +
             "  \"404\": {\n" +
-            "    \"size\": 2,\n" +
+            "    \"size\": 1,\n" +
             "    \"urls\": [\n" +
-            "      \"http://oadk.opu.ua\",\n" +
-            "      \"oadt.at.ua\"\n" +
+            "      \"http://oadk.opu.ua\"\n" +
             "    ]\n" +
             "  },\n" +
             "  \"50x\": {\n" +
             "    \"size\": 0,\n" +
             "    \"urls\": []\n" +
             "  },\n" +
-            "  \"dead\": 2,\n" +
-            "  \"total\": 132\n" +
+            "  \"dead\": 1,\n" +
+            "  \"total\": 6\n" +
             "}\n";
 
 
@@ -51,7 +50,7 @@ public class CheckDeadLinksTest {
 
     @Test
     public void checkBrokenLinks(){
-        DeadLinksChecker.main(new String[]{url});
+        Main.main(new String[]{url});
         assertEquals(expected, outContent.toString());
     }
 
@@ -59,7 +58,7 @@ public class CheckDeadLinksTest {
     @DisplayName("Negative test")
     @Test
     public void checkBrokenLinksNegative(){
-        DeadLinksChecker.main(new String[]{url});
+        Main.main(new String[]{url});
         assertNotEquals(expected+1, outContent.toString());
     }
 

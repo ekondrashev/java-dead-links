@@ -1,20 +1,22 @@
 package ua.od.deadlinks.entity;
 
+import java.net.URL;
+
 public class Link {
 
-    private String link;
+    private URL link;
     private int code;
 
-    public Link(String link, int code) {
+    public Link(URL link, int code) {
         this.link = link;
         this.code = code;
     }
 
-    public String getLink() {
+    public URL getLink() {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(URL link) {
         this.link = link;
     }
 

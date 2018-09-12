@@ -4,12 +4,12 @@ package ua.od.deadlinks;
 /**
  * https://github.com/ekondrashev/java-dead-links
  */
-public class DeadLinksChecker {
+public class Main {
 
     public static void main(String[] args) {
-        DeadLinksChecker deadLinksChecker = new DeadLinksChecker();
-        if(deadLinksChecker.checkParameters(args)) System.exit(0);
-        System.out.println(new UrlChecker(args[0]).checkUrls());
+        if(new Main().checkParameters(args)) System.exit(0);
+        Links html = new Links.HTML(args[0]);
+        System.out.println(html.toString());
     }
 
 

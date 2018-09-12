@@ -9,6 +9,7 @@ import ua.od.deadlinks.entity.ResponseCode;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,9 @@ public class UrlChecker {
         this.targetUrl = targetUrl;
     }
 
-    public String checkUrls(){
-        List<String> links = new HtmlParser().getLinks(targetUrl);
-        List<Link> urlsResponseCode = getUrlsResponseCode(links);
+    public String checkUrls(List<URL> urls) {
+
+        List<Link> urlsResponseCode = getUrlsResponseCode(urls);
 
         LinksContainer container = new LinksContainer();
         ResponseCode resp404 = new ResponseCode();
@@ -45,7 +46,7 @@ public class UrlChecker {
         resp404.setSize(count404);
         resp50x.setSize(count50x);
         container.setDeadLinksCount(resp50x.getSize() + resp404.getSize());
-        container.setTotalLinks(links.size());
+        container.setTotalLinks(urls.size());
         container.setUrl(targetUrl);
         container.setPageNotFoundResponse(resp404);
         container.setServerErrorResponse(resp50x);
@@ -56,40 +57,31 @@ public class UrlChecker {
     }
 
 
-    public List<Link> getUrlsResponseCode(List<String> links) {
+    public List<Link> getUrlsResponseCode(List<URL> links)  {
         List<Link> linksWithResponse = new ArrayList<>();
-        for (String link : links) {
-            linksWithResponse.add(new Link(link.trim(), getResponseCode(link.trim())));
+        for (URL link : links) {
+            linksWithResponse.add(new Link(link, getResponseCode(link)));
         }
         return linksWithResponse;
     }
 
 
-    private int getResponseCode(String link) {
-        URL url;
+    private int getResponseCode(URL url) {
         HttpURLConnection connection = null;
         int code = 200;
-        if(link.length() == 0) {
+        if(url.toString().length() == 0) {
             return 404;
         }
 
-        if(link.startsWith("/")) {
-            link = targetUrl + link;
-        } else if (link.startsWith("#")) {
-            link = targetUrl + "/" + link;
-        }
-
         try {
-            url = new URL(link);
-            if(link.startsWith("https")) {
+            if(url.getProtocol().equals("https")) {
                 connection = (HttpsURLConnection) url.openConnection();
-            } else if (link.startsWith("http")){
+            } else if (url.getProtocol().equals("http")){
                 connection = (HttpURLConnection) url.openConnection();
             }
             connection.setConnectTimeout(5000);
             code = connection.getResponseCode();
         } catch (IOException e) {
-//            e.printStackTrace();
             code = 404;
         } finally {
             if(connection != null) connection.disconnect();

@@ -17,14 +17,14 @@ public class CheckDeadLinksTest {
     private final PrintStream originalErr = System.err;
 
 
-    private final String url = "https://od.isuo.org/ru/vnz/view/id/75905";
+    private final String url = "http://rl.odessa.ua/index.php/uk/";
     private final String expected = "{\n" +
-            "  \"url\": \"https://od.isuo.org/ru/vnz/view/id/75905\",\n" +
+            "  \"url\": \"http://rl.odessa.ua/index.php/uk/\",\n" +
             "  \"404\": {\n" +
             "    \"size\": 2,\n" +
             "    \"urls\": [\n" +
-            "      \"http://oadk.opu.ua\",\n" +
-            "      \"oadt.at.ua\"\n" +
+            "      \"http://rleconomy.blogspot.com/\",\n" +
+            "      \"https://vk.com/rl_odessa\"\n" +
             "    ]\n" +
             "  },\n" +
             "  \"50x\": {\n" +
@@ -32,7 +32,7 @@ public class CheckDeadLinksTest {
             "    \"urls\": []\n" +
             "  },\n" +
             "  \"dead\": 2,\n" +
-            "  \"total\": 132\n" +
+            "  \"total\": 15\n" +
             "}\n";
 
 
@@ -51,7 +51,7 @@ public class CheckDeadLinksTest {
 
     @Test
     public void checkBrokenLinks(){
-        DeadLinksChecker.main(new String[]{url});
+        Main.main(new String[]{url});
         assertEquals(expected, outContent.toString());
     }
 
@@ -59,7 +59,7 @@ public class CheckDeadLinksTest {
     @DisplayName("Negative test")
     @Test
     public void checkBrokenLinksNegative(){
-        DeadLinksChecker.main(new String[]{url});
+        Main.main(new String[]{url});
         assertNotEquals(expected+1, outContent.toString());
     }
 

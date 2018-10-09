@@ -5,17 +5,40 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class HtmlParser {
 
 
-    public List<String> getLinks(String url){
-        Document doc = getDocument(url);
+    public List<URL> getLinks(String link)  {
+        Document doc = getDocument(link);
         Elements elements = doc.getElementsByTag("a");
-        List<String> links = new ArrayList<>();
-        elements.forEach(element -> links.add(element.attr("href")));
+        List<URL> links = new ArrayList<>();
+        URL url = null;
+        try {
+            url = new URL(link);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        String targetUrl = url.getProtocol() + url.getHost();
+        elements.forEach(element -> {
+
+            try {
+                String value = element.attr("href").trim();
+                if(value.startsWith("/")) {
+                    value = targetUrl + value;
+                } else if (value.startsWith("#")) {
+                    value = link + "/" + value;
+                }
+                links.add(new URL(value));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+        });
         return links;
     }
 

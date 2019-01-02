@@ -32,3 +32,4 @@ The program execution result should be written to `System.out`. Here is example 
 ```
 
 * It is ok to use YML/XML or any other format considering the test verifying this format is available.
+* There should be at least one dead link available

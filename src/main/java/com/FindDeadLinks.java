@@ -16,8 +16,10 @@ import java.util.Map;
 
 public class FindDeadLinks {
     public static void main(String[] args) {
-        String url = "https://odessa.sabinka.info/";
-        System.out.println(new FindDeadLinks(url).sortLinks());
+        if (args.length == 0) {
+            return;
+        }
+        System.out.println(new FindDeadLinks(args[0]).sortLinks());
     }
 
 

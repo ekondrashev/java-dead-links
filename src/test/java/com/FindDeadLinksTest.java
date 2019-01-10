@@ -15,7 +15,7 @@ public class FindDeadLinksTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-    private final String url = "https://www.google.com/";
+    private final String url = "https://odessa.sabinka.info/";
     private final String expected = "{\n" +
             "  \"url\": \"https://odessa.sabinka.info/\",\n" +
             "  \"404\": {\n" +

@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,12 +18,13 @@ import java.util.Map;
 
 public class FindDeadLinks {
        private String inputUrl;
-
+  
     public FindDeadLinks(String targetUrl) {
         this.inputUrl = targetUrl;
     }
 
     public String sortLinks() {
+
         Map<URL, Integer> links = linksParser(inputUrl);
         LinksByResponse links404 = new LinksByResponse();
         LinksByResponse links50X = new LinksByResponse();
@@ -45,6 +47,7 @@ public class FindDeadLinks {
 
         return new GsonBuilder().setPrettyPrinting().create().toJson(results);
     }
+
 
     public Map<URL, Integer> linksParser(String inputUrl) {
         try {
@@ -85,6 +88,7 @@ public class FindDeadLinks {
         }
     }
 
+
     private int getResponseCode(URL link) {
         HttpURLConnection connection = null;
         int responseCode = 200;
@@ -96,6 +100,7 @@ public class FindDeadLinks {
                 connection = (HttpsURLConnection) link.openConnection();
             } else if (link.getProtocol().equals("http")) {
                 connection = (HttpURLConnection) link.openConnection();
+
             }
             connection.setConnectTimeout(5000);
             responseCode = connection.getResponseCode();

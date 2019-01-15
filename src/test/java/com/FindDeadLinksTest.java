@@ -15,6 +15,7 @@ public class FindDeadLinksTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
+
     private final String url = "http://kosumi.i-go.in.ua/links.php?lng=1";
     private final String expected = "{\n" +
             "  \"url\": \"http://kosumi.i-go.in.ua/links.php?lng\\u003d1\",\n" +

@@ -12,7 +12,7 @@ interface Links {
 
         @Override
         public String toString() {
-            return this.result = new Main(pageUrl).sortLinks();
+            return this.result = new FindDeadLinks(pageUrl).sortLinks();
         }
     }
 }

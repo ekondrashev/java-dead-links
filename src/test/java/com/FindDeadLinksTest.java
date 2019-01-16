@@ -15,13 +15,14 @@ public class FindDeadLinksTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
-    private final String url = "https://odessa.sabinka.info/";
+
+    private final String url = "http://kosumi.i-go.in.ua/links.php?lng=1";
     private final String expected = "{\n" +
-            "  \"url\": \"https://odessa.sabinka.info/\",\n" +
+            "  \"url\": \"http://kosumi.i-go.in.ua/links.php?lng\\u003d1\",\n" +
             "  \"404\": {\n" +
             "    \"size\": 1,\n" +
             "    \"links\": [\n" +
-            "      \"veranda-odessa.com\"\n" +
+            "      \"https://vk.com/kosumiclubode\"\n" +
             "    ]\n" +
             "  },\n" +
             "  \"50x\": {\n" +
@@ -29,7 +30,7 @@ public class FindDeadLinksTest {
             "    \"links\": []\n" +
             "  },\n" +
             "  \"dead\": 1,\n" +
-            "  \"total\": 52\n" +
+            "  \"total\": 8\n" +
             "}\n";
 
 
@@ -47,13 +48,13 @@ public class FindDeadLinksTest {
 
     @Test
     public void findLinks()  {
-        FindDeadLinks.main(new String[]{url});
+        Main.main(new String[]{url});
         assertEquals(expected, outContent.toString());
     }
 
     @Test
     public void findLinksNegative()  {
-        FindDeadLinks.main(new String[]{url});
+        Main.main(new String[]{url});
         assertNotEquals(expected+1, outContent.toString());
     }
 }

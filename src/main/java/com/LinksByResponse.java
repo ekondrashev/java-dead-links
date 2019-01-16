@@ -1,12 +1,16 @@
 package com;
 
+
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LinksByResponse {
 
     private int size;
-    private List <String> links;
+
+    private List <URL> links;
+
 
     public LinksByResponse() {
         links = new ArrayList<>();
@@ -16,7 +20,8 @@ public class LinksByResponse {
         return size;
     }
 
-    public void addLink(String link) {
+
+    public void addLink(URL link) {
         links.add(link);
         size ++;
 

@@ -8,6 +8,8 @@ import org.jsoup.select.Elements;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,22 +17,15 @@ import java.util.List;
 import java.util.Map;
 
 public class FindDeadLinks {
-    public static void main(String[] args) {
-        if (args.length == 0) {
-            return;
-        }
-        System.out.println(new FindDeadLinks(args[0]).sortLinks());
-    }
-
-
-    private String inputUrl;
-
+       private String inputUrl;
+  
     public FindDeadLinks(String targetUrl) {
         this.inputUrl = targetUrl;
     }
 
     public String sortLinks() {
-        Map<String, Integer> links = linksParser(inputUrl);
+
+        Map<URL, Integer> links = linksParser(inputUrl);
         LinksByResponse links404 = new LinksByResponse();
         LinksByResponse links50X = new LinksByResponse();
 
@@ -53,16 +48,38 @@ public class FindDeadLinks {
         return new GsonBuilder().setPrettyPrinting().create().toJson(results);
     }
 
-    public Map<String, Integer> linksParser(String url) {
-        try {
-            Document document = Jsoup.connect(url).get();
-            Elements elements = document.getElementsByTag("a");
-            List<String> urls = new ArrayList<>();
-            elements.forEach(element -> urls.add(element.attr("href")));
 
-            Map<String, Integer> allLinks = new HashMap<>();
-            for (String link : urls) {
-                allLinks.put(link.trim(), getResponseCode(link.trim()));
+    public Map<URL, Integer> linksParser(String inputUrl) {
+        try {
+            Document document = Jsoup.connect(inputUrl).get();
+            Elements elements = document.getElementsByTag("a");
+            List<URL> urls = new ArrayList<>();
+            URL url = null;
+            try {
+                url = new URL(inputUrl);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            String targetUrl = url.getProtocol() + url.getHost();
+            elements.forEach(element -> {
+
+                try {
+                    String value = element.attr("href").trim();
+                    if (value.startsWith("/")) {
+                        value = targetUrl + value;
+                    } else if (value.startsWith("#")) {
+                        value = inputUrl + "/" + value;
+                    }
+                    urls.add(new URL(value));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+
+            });
+
+            Map<URL, Integer> allLinks = new HashMap<>();
+            for (URL link : urls) {
+                allLinks.put(link, getResponseCode(link));
             }
             return allLinks;
         } catch (IOException e) {
@@ -71,24 +88,19 @@ public class FindDeadLinks {
         }
     }
 
-    private int getResponseCode(String link) {
-        URL url;
+
+    private int getResponseCode(URL link) {
         HttpURLConnection connection = null;
         int responseCode = 200;
-        if (link.length() == 0) {
+        if (link.toString().length() == 0) {
             return 404;
         }
-        if (link.startsWith("/")) {
-            link = inputUrl + link;
-        } else if (link.startsWith("#")) {
-            link = inputUrl + "/" + link;
-        }
         try {
-            url = new URL(link);
-            if (link.startsWith("https")) {
-                connection = (HttpsURLConnection) url.openConnection();
-            } else if (link.startsWith("http")) {
-                connection = (HttpURLConnection) url.openConnection();
+            if (link.getProtocol().equals("https")) {
+                connection = (HttpsURLConnection) link.openConnection();
+            } else if (link.getProtocol().equals("http")) {
+                connection = (HttpURLConnection) link.openConnection();
+
             }
             connection.setConnectTimeout(5000);
             responseCode = connection.getResponseCode();

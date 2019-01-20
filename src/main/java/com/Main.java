@@ -5,7 +5,7 @@ public class Main {
         if (args.length == 0) {
             return;
         }
-        Links html = new Links.HTML(args[0]);
+        Links html = new Links.HTML(args[0], new HTTP.Default());
         System.out.println(html.toString());
     }
 }

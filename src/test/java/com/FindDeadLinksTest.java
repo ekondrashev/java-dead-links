@@ -4,7 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
@@ -16,22 +18,26 @@ public class FindDeadLinksTest {
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
     private final String url = "http://kosumi.i-go.in.ua/links.php?lng=1";
-    private final String expected = "{\n" +
-            "  \"url\": \"http://kosumi.i-go.in.ua/links.php?lng\\u003d1\",\n" +
-            "  \"404\": {\n" +
-            "    \"size\": 1,\n" +
-            "    \"links\": [\n" +
-            "      \"https://vk.com/kosumiclubode\"\n" +
-            "    ]\n" +
-            "  },\n" +
-            "  \"50x\": {\n" +
-            "    \"size\": 0,\n" +
-            "    \"links\": []\n" +
-            "  },\n" +
-            "  \"dead\": 1,\n" +
-            "  \"total\": 8\n" +
-            "}\n";
+    private String expected = "";
 
+
+    @Before
+    public void setExpectedOutputFromJsonFile() {
+        try {
+            InputStreamReader inputStream = new InputStreamReader(getClass().getClassLoader()
+                    .getResourceAsStream("expected_result.json"));
+            BufferedReader bufferedReader = new BufferedReader(inputStream);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (String line; (line = bufferedReader.readLine()) != null ; ) {
+                stringBuilder.append(line).append("\n");
+            }
+            expected = stringBuilder.toString();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Before
     public void setUpStreams() {

@@ -17,9 +17,28 @@ public class FindDeadLinksTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
 
+
     private final String url = "http://kosumi.i-go.in.ua/links.php?lng=1";
     private String expected = "";
 
+
+    @Before
+    public void setExpectedOutputFromJsonFile() {
+        try {
+            InputStreamReader inputStream = new InputStreamReader(getClass().getClassLoader()
+                    .getResourceAsStream("expected_result.json"));
+            BufferedReader bufferedReader = new BufferedReader(inputStream);
+            StringBuilder stringBuilder = new StringBuilder();
+
+            for (String line; (line = bufferedReader.readLine()) != null ; ) {
+                stringBuilder.append(line).append("\n");
+            }
+            expected = stringBuilder.toString();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Before
     public void setExpectedOutputFromJsonFile() {

@@ -41,24 +41,6 @@ public class FindDeadLinksTest {
     }
 
     @Before
-    public void setExpectedOutputFromJsonFile() {
-        try {
-            InputStreamReader inputStream = new InputStreamReader(getClass().getClassLoader()
-                    .getResourceAsStream("expected_result.json"));
-            BufferedReader bufferedReader = new BufferedReader(inputStream);
-            StringBuilder stringBuilder = new StringBuilder();
-
-            for (String line; (line = bufferedReader.readLine()) != null ; ) {
-                stringBuilder.append(line).append("\n");
-            }
-            expected = stringBuilder.toString();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Before
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
